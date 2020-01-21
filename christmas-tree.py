@@ -7,8 +7,16 @@ import os
 if os.name.lower() == "nt":
 	init()
 
-def clear():
-	os.system("cls") if os.name.lower() == "nt" else os.system("clear")
+def clear(x=1, y=1, fill=False, old=False):
+	if old:
+		os.system("cls") if os.name.lower() == "nt" else os.system("clear")
+		return
+
+	print(f"\033[{y};{x}H", end="")		# Move cursor on top left to clear without flickering
+	if fill:
+		width, height = os.get_terminal_size()
+		for i in range(height-y):
+			print(" "*(width-x-1))
 
 def sleep(ms):
 	import time
@@ -118,8 +126,9 @@ lightOffset = 0
 lightBounds = [0, colors.index(Fore.RED)+1]		# Colors array start and end (to skip colors, now using first 4 colors)
 starLight = 0
 try:
+	clear(fill=True)		# Remove everything from terminal
 	while True:
-		clear()
+		clear()		# Move cursor on top left
 
 		# Split strings after the copy of the array [double array bug]
 		tree = originalTree[:]
@@ -154,6 +163,8 @@ try:
 
 		lightOffset += 1
 		sleep(500)
+
+		clear(y=len(tree), fill=True)		# Clear screen after tree
 
 except KeyboardInterrupt:
 	print("\n" + Fore.GREEN + "Merry " + Fore.RED + "Xmas" + Fore.RESET + "!")
