@@ -181,4 +181,4 @@ try:
 
 except KeyboardInterrupt:
 	print("\n" + Fore.GREEN + "Merry " + Fore.RED + "Xmas" + Fore.RESET + "!")
-	if not isWindows: hideCursor(False)		# Restore the cursor
+	if not isWindows: hideCursor(True)		# Restore the cursor
