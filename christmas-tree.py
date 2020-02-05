@@ -139,7 +139,7 @@ lightBounds = [0, colors.index(Fore.RED)+1]		# Colors array start and end (to sk
 starLight = 0
 try:
 	clear(fill=True)		# Remove everything from terminal
-	if isWindows: hideCursor()
+	if not isWindows: hideCursor()
 	while True:
 		clear()		# Move cursor on top left
 
@@ -181,4 +181,4 @@ try:
 
 except KeyboardInterrupt:
 	print("\n" + Fore.GREEN + "Merry " + Fore.RED + "Xmas" + Fore.RESET + "!")
-	if isWindows: hideCursor(False)		# Restore the cursor
+	if not isWindows: hideCursor(False)		# Restore the cursor
