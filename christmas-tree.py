@@ -3,13 +3,25 @@ from colorama import init, Fore
 from random import choice
 import os
 
-# Initialize colorama for Windows
+# Check if platform is windows
+isWindows = False
 if os.name.lower() == "nt":
+	isWindows = True
+
+# Initialize colorama for Windows
+if isWindows:
 	init()
+
+def hideCursor(restore=False):
+	if restore:
+		print("\033[?25h")		# Show
+		return
+
+	print("\033[?25l")		# Hide
 
 def clear(x=1, y=1, fill=False, old=False):
 	if old:
-		os.system("cls") if os.name.lower() == "nt" else os.system("clear")
+		os.system("cls") if isWindows else os.system("clear")
 		return
 
 	print(f"\033[{y};{x}H", end="")		# Move cursor on top left to clear without flickering
@@ -127,6 +139,7 @@ lightBounds = [0, colors.index(Fore.RED)+1]		# Colors array start and end (to sk
 starLight = 0
 try:
 	clear(fill=True)		# Remove everything from terminal
+	if isWindows: hideCursor()
 	while True:
 		clear()		# Move cursor on top left
 
@@ -168,3 +181,4 @@ try:
 
 except KeyboardInterrupt:
 	print("\n" + Fore.GREEN + "Merry " + Fore.RED + "Xmas" + Fore.RESET + "!")
+	if isWindows: hideCursor(False)		# Restore the cursor
